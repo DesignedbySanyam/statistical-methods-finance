@@ -1,0 +1,87 @@
+# Statistical Methods for Finance — Final Project (STAT GR5261)
+
+This repository contains our final project for **STAT GR5261 (Statistical Methods for Finance)**.  
+We analyze a diversified universe of **10 assets** (Technology, Commodities, Crypto, Consumer Staples) and apply statistical methods to **construct optimal portfolios** and **evaluate risk**, including tail-risk behavior.
+
+**Authors:** Sanyam Madan (sm5743), Gayatri Dittakavi (nd2921), Andile Khumalo (abk2190)
+
+---
+
+## Project Overview
+
+We study monthly returns from **Dec 2020 to Dec 2025** across:
+
+- **Tech/Growth:** NVDA, TSLA, AAPL, MSFT  
+- **Commodities/Crypto:** Gold (GC=F), Crude Oil (CL=F), Bitcoin (BTC-USD)  
+- **Defensive/Staples:** UL, PEP, WMT  
+- **Benchmark:** S&P 500 (^GSPC)  
+- **Risk-free proxy:** 3-Month T-Bill (^IRX)
+
+The workflow includes:
+- Return construction + descriptive stats
+- Normality + stationarity checks
+- Portfolio optimization:
+  - Minimum Variance Portfolio (MVP)
+  - Tangency (max Sharpe) portfolio
+  - Efficient frontier (with and without short sales)
+- Risk estimation:
+  - Historical **VaR / Expected Shortfall**
+  - Bootstrap confidence intervals
+- Dimensionality reduction:
+  - **PCA** (Scree + interpretation)
+  - **Factor Analysis** (6-factor model + rotation)
+- Tail dependence:
+  - Copula model comparison (Gaussian vs Student-t vs Archimedean)
+
+---
+
+## Key Findings (High-Level)
+
+- Returns show **significant non-normality**, especially for BTC and high-growth tech, motivating tail-aware risk modeling.
+- The **Tangency portfolio** exhibits a “barbell” style: heavy weights in **Gold (GC=F)** with exposure to high-return tech (e.g., NVDA), balancing return potential with diversification benefits.
+- A **two-fund separation / CML strategy** (T-Bills + Tangency) dramatically reduces downside risk at a conservative target return:
+  - **~88% reduction in VaR** vs. holding risky assets only (for a 6% annual target).
+- Copula analysis favors the **Student-t copula**, indicating **tail dependence** (correlations rise in crashes), meaning diversification can weaken during stress events.
+
+(See the full report PDF for tables/figures and detailed interpretation.)
+
+---
+
+## Repository Contents
+
+- `Stats_Final_project.ipynb`  
+  Main analysis notebook: data download, return calculations, portfolio optimization, PCA/FA, VaR/ES, copulas.
+
+- `Final Project Report.pdf`  
+  Final written report with results, figures, and conclusions.
+
+---
+
+## How to Run
+
+### Option A — Run in Google Colab (Recommended)
+1. Upload the notebook to Colab (or open from GitHub).
+2. Run all cells top-to-bottom.
+3. The notebook installs required packages via pip (see Requirements below).
+
+### Option B — Run Locally (Jupyter)
+1. Create an environment (recommended).
+2. Install dependencies.
+3. Launch Jupyter and run the notebook.
+
+---
+
+## Requirements
+
+Core packages used:
+- `yfinance`
+- `pandas`, `numpy`
+- `scipy`
+- `matplotlib`
+- `statsmodels` (if used for stationarity/ADF in your environment)
+- `factor_analyzer`
+- `copulae`
+
+Install (example):
+```bash
+pip install yfinance pandas numpy scipy matplotlib statsmodels factor_analyzer copulae
